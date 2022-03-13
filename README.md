@@ -8,5 +8,4 @@ https://github.com/dockersamples/example-voting-app
 ## Here is the design I made 
 <p align="center">
   <img src="/.github/architecture.png" width="350" title="hover text">
-  <img src="/.github/architecture.png" width="350" alt="accessibility text">
 </p>
