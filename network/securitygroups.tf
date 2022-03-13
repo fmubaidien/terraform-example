@@ -71,3 +71,35 @@ resource "aws_security_group" "worker_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+# Security group for databases
+resource "aws_security_group" "database_sg" {
+    name = "database_sg"
+    description = "a security group for the database instances"
+    vpc_id      = "${aws_vpc.Main.id}"
+
+#Postgres port  
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    security_groups =  ["${aws_security_group.worker_sg.id}", "${aws_security_group.results-voting_sg.id}"]
+  }
+
+#Redis port #No need to add this port to the application security groups since security groups are stateful so if outbound is allowed inbound is allowed once a connection is established
+  ingress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    security_groups =  ["${aws_security_group.worker_sg.id}", "${aws_security_group.results-voting_sg.id}"]
+  }
+  
+
+  # Allow all outbound traffic.
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
