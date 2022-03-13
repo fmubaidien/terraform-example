@@ -22,5 +22,4 @@ module "database" {
     region = "us-east-1"
     private_subnet = module.network.private_subnet
     database-sg = module.network.database-sg
-
 }
